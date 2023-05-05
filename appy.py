@@ -239,4 +239,24 @@ elif yan_sayfa_secenek == 'About Analyses' :
  'The products have no sales in the last 80 days are listed here. If there are no such products, this analysis does not appear on the screen.'
 
 
-
+takip= """
+<!-- Default Statcounter code for cem-free-duty
+https://demandplanningtool.streamlit.app/ -->
+<script type="text/javascript">
+var sc_project=12877609; 
+var sc_invisible=1; 
+var sc_security="e3862e34"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics
+Made Easy - Statcounter" href="https://statcounter.com/"
+target="_blank"><img class="statcounter"
+src="https://c.statcounter.com/12877609/0/e3862e34/1/"
+alt="Web Analytics Made Easy - Statcounter"
+referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+<!-- End of Statcounter Code -->
+"""
+#st.markdown(takip, unsafe_allow_html=True)  
+components.html(takip,width=200, height=200)
