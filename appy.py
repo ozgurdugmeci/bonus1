@@ -23,8 +23,10 @@ if yan_sayfa_secenek == 'Analyses' :
 
  
  st.info('Once excel file is uploaded, analyses will automatically start.')
-
-
+ rowy=[]
+ rowy=['Product No','Category','Sub Category','21 Gün','42 Gün','63 Gün','84 Gün','Stok']
+ st.write('Column order in excel file must be :')
+ rowy   
  st.set_option('deprecation.showfileUploaderEncoding', False)
  uploaded_file = st.file_uploader("Select Excel File To Upload", type=['xlsx'])
  
