@@ -174,15 +174,15 @@ if yan_sayfa_secenek == 'Analyses' :
    df_analiz_show['Predicted_Sales']=df_analiz_show['Predicted_Sales'].astype(int)
    df_analiz_show=df_analiz_show.reset_index(drop=True)
    st.dataframe(df_analiz_show)
+    
+   if len(df_sfr)>0:
+    st.info('C- Zero Sales') 
+    'The table shows the products which have no sales in last 80 days.'
+    df_sfr=df_sfr.reset_index(drop=True)
+    st.dataframe(df_sfr)   
   except:
    'Excel dosya süutunlarını kontrol edin.'
-  
-  if len(df_sfr)>0:
-   st.info('C- Zero Sales') 
-   'The table shows the products which have no sales in last 80 days.'
-   df_sfr=df_sfr.reset_index(drop=True)
-   st.dataframe(df_sfr)   
-  
+
 
 elif yan_sayfa_secenek == 'Easy Inventory Planner' :
  st.title('Easy Inventory Planner')
