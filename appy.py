@@ -45,7 +45,9 @@ if yan_sayfa_secenek == 'Analyses' :
    df['Sales84'].fillna(0,inplace=True)
    st.dataframe(df) 
   except:
-   'Dosya yüklemede hata' 
+   'Dosya yüklemede hata'
+   'Excel dosyayı kontrol edin.'
+    
    st.stop() 
   #df=pd.DataFrame(rows) 
    
