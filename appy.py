@@ -35,8 +35,13 @@ if yan_sayfa_secenek == 'Analyses' :
   df = pd.read_excel(uploaded_file)
   df.columns=['Product','Category','Sub-Category','Sales21','Sales42','Sales63','Sales84','Inventory']
   df['Product'] = df['Product'].astype('str')
-  df['Category'] = df['Product'].astype('str')
-  df['Sub-Category'] = df['Product'].astype('str')
+  df['Category'] = df['Category'].astype('str')
+  df['Sub-Category'] = df['Sub-Category'].astype('str')
+  df['Sales21'] = df['Sales21'].astype('int')
+  df['Sales42'] = df['Sales42'].astype('int')
+  df['Sales63'] = df['Sales63'].astype('int')
+  df['Sales84'] = df['Sales84'].astype('int')
+  df['Inventory'] = df['Inventory'].astype('int')
   df['Product'].fillna('-',inplace=True)
   df['Category'].fillna('-',inplace=True)
   df['Sub-Category'].fillna('-',inplace=True)
@@ -44,6 +49,7 @@ if yan_sayfa_secenek == 'Analyses' :
   df['Sales42'].fillna(0,inplace=True)
   df['Sales63'].fillna(0,inplace=True)
   df['Sales84'].fillna(0,inplace=True)
+  df['Inventory'].fillna(0,inplace=True)
   st.dataframe(df) 
   #except:
   'Dosya yüklemede hata'
