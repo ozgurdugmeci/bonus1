@@ -188,7 +188,7 @@ if yan_sayfa_secenek == 'Analyses' :
    df_sfr=df_sfr.reset_index(drop=True)
    #st.dataframe(df_sfr)   
   #except:
-  'Excel dosya sütunlarını kontrol edin.'
+  #'Excel dosya sütunlarını kontrol edin.'
 
 
 elif yan_sayfa_secenek == 'Easy Inventory Planner' :
