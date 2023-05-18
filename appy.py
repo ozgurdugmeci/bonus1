@@ -33,22 +33,20 @@ if yan_sayfa_secenek == 'Analyses' :
  
  if uploaded_file :
   df = pd.read_excel(uploaded_file)
-  try:
-
-   df.columns=['Product','Category','Sub-Category','Sales21','Sales42','Sales63','Sales84','Inventory']
-   df['Product'].fillna('-',inplace=True)
-   df['Category'].fillna('-',inplace=True)
-   df['Sub-Category'].fillna('-',inplace=True)
-   df['Sales21'].fillna(0,inplace=True)
-   df['Sales42'].fillna(0,inplace=True)
-   df['Sales63'].fillna(0,inplace=True)
-   df['Sales84'].fillna(0,inplace=True)
-   st.dataframe(df) 
-  except:
-   'Dosya yüklemede hata'
-   'Excel dosyayı kontrol edin.'
+  df.columns=['Product','Category','Sub-Category','Sales21','Sales42','Sales63','Sales84','Inventory']
+  df['Product'].fillna('-',inplace=True)
+  df['Category'].fillna('-',inplace=True)
+  df['Sub-Category'].fillna('-',inplace=True)
+  df['Sales21'].fillna(0,inplace=True)
+  df['Sales42'].fillna(0,inplace=True)
+  df['Sales63'].fillna(0,inplace=True)
+  df['Sales84'].fillna(0,inplace=True)
+  st.dataframe(df) 
+  #except:
+  #'Dosya yüklemede hata'
+  #'Excel dosyayı kontrol edin.'
     
-   st.stop() 
+  #st.stop() 
   #df=pd.DataFrame(rows) 
    
   try:
