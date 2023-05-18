@@ -12,7 +12,6 @@ import base64
 from io import BytesIO
 from datetime import datetime
 
-
 st.sidebar.title('Easy Inventory Planner')
 st.sidebar.header('Content')
 yan_sayfa_secenek = st.sidebar.radio(
@@ -173,7 +172,7 @@ if yan_sayfa_secenek == 'Analyses' :
   df_analiz_show['Stock_Cover']=df_analiz_show['Stock_Cover'].astype(int)
   df_analiz_show['Predicted_Sales']=df_analiz_show['Predicted_Sales'].astype(int)
   df_analiz_show=df_analiz_show.reset_index(drop=True)
-  st.dataframe(df_analiz_show)
+  #st.dataframe(df_analiz_show)
    
   if len(df_sfr)>0:
    st.info('C- Zero Sales') 
