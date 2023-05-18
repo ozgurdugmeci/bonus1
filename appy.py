@@ -50,7 +50,7 @@ if yan_sayfa_secenek == 'Analyses' :
   df['Sales63'].fillna(0,inplace=True)
   df['Sales84'].fillna(0,inplace=True)
   df['Inventory'].fillna(0,inplace=True)
-  st.dataframe(df) 
+  #st.dataframe(df) 
   #except:
   'Dosya yüklemede hata'
   'Excel dosyayı kontrol edin.'
