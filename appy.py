@@ -34,8 +34,10 @@ if yan_sayfa_secenek == 'Analyses' :
   #try:
   df = pd.read_excel(uploaded_file)
   df.columns=['Product','Category','Sub-Category','Sales21','Sales42','Sales63','Sales84','Inventory']
+  df['Product'] = df['Product'].astype('str')
+  df['Category'] = df['Product'].astype('str')
+  df['Sub-Category'] = df['Product'].astype('str')
   df['Product'].fillna('-',inplace=True)
-  df['Product'] = df['Product'].astype('int64')
   df['Category'].fillna('-',inplace=True)
   df['Sub-Category'].fillna('-',inplace=True)
   df['Sales21'].fillna(0,inplace=True)
