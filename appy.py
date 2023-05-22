@@ -50,12 +50,12 @@ if yan_sayfa_secenek == 'Analyses' :
    df['Inventory'].fillna(0,inplace=True)
    st.dataframe(df_dummx) 
   #except:
-   'Dosya yüklemede hata'
-   'Excel dosyayı kontrol edin.'
-    
-   st.stop() 
-   #df=pd.DataFrame(rows) 
+  'Dosya yüklemede hata'
+  'Excel dosyayı kontrol edin.'
    
+  #st.stop() 
+  #df=pd.DataFrame(rows) 
+  
   #try:
   df_sfr= df.loc[df['Sales84']==0].copy()
   
