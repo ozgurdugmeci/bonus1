@@ -156,7 +156,7 @@ if yan_sayfa_secenek == 'Analyses' :
   #df_tutarlk['Ratio']=df_tutarlk['Ratio'].astype(str)
   #df.style.format("{:.2%}")
   #df.style.format({'B': "{:0<4.0f}", 'D': '{:+.2f}'})
-  df_tutarlk= df_tutarlk.style.format({'Ratio': '{:.0%}'})
+  #df_tutarlk= df_tutarlk.style.format({'Ratio': '{:.0%}'})
   st.info('A- Predictability Analysis') 
   total_product
   #df_tutarlk2=df_tutarlk.astype(str).copy()
