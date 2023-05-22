@@ -153,7 +153,7 @@ if yan_sayfa_secenek == 'Analyses' :
   df_tutarlk=df_tutarlk.sort_values(by='Ratio', ascending=False)
   total_product= str(total_product) + ' products analysed'
   df_tutarlk['Product_Count']=df_tutarlk['Product_Count'].astype(str)
-  df_tutarlk['Ratio']=df_tutarlk['Ratio'].astype(str)
+  #df_tutarlk['Ratio']=df_tutarlk['Ratio'].astype(str)
   #df.style.format("{:.2%}")
   #df.style.format({'B': "{:0<4.0f}", 'D': '{:+.2f}'})
   df_tutarlk= df_tutarlk.style.format({'Ratio': '{:.0%}'})
