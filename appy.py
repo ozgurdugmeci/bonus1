@@ -56,7 +56,7 @@ if yan_sayfa_secenek == 'Analyses' :
    st.stop() 
    #df=pd.DataFrame(rows) 
    
-  try:
+  #try:
   df_sfr= df.loc[df['Sales84']==0].copy()
   
   df_analiz= df.loc[df['Sales84'] > 0].copy()
