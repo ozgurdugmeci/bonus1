@@ -147,9 +147,10 @@ if yan_sayfa_secenek == 'Analyses' :
   df_tutarlk['Kum']=  df_tutarlk['Product'].sum()
   total_product= df_tutarlk['Product'].sum()
   df_tutarlk['Ratio']= df_tutarlk.Product / df_tutarlk.Kum
-  df_tutarlk=df_tutarlk.sort_values(by='Ratio', ascending=False)
+  
   df_tutarlk.drop(['Kum'], inplace=True, axis=1)
   df_tutarlk.columns= ['Label','Product_Count','Ratio']
+  df_tutarlk=df_tutarlk.sort_values(by='Ratio', ascending=False)
   df_tutarlk2=df_tutarlk.copy()
   
   df_tutarlk2['Ratio']=df_tutarlk2['Ratio']*100
