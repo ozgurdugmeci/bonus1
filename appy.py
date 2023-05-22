@@ -150,6 +150,7 @@ if yan_sayfa_secenek == 'Analyses' :
   
   df_tutarlk.drop(['Kum'], inplace=True, axis=1)
   df_tutarlk.columns= ['Label','Product_Count','Ratio']
+  df_tutarlk2=df_tutarlk.data.copy()
   df_tutarlk=df_tutarlk.sort_values(by='Ratio', ascending=False)
   total_product= str(total_product) + ' products analysed'
   #df_tutarlk['Product_Count']=df_tutarlk['Product_Count'].astype(str)
@@ -159,7 +160,7 @@ if yan_sayfa_secenek == 'Analyses' :
   df_tutarlk= df_tutarlk.style.format({'Ratio': '{:.0%}'})
   st.info('A- Predictability Analysis') 
   total_product
-  df_tutarlk2=df_tutarlk.data.copy()
+  
   df_tutarlk2=df_tutarlk2.astype(str)
   st.dataframe(df_tutarlk2)
   'Predictability Analysis shows the quality of inventory management. The higher percentage of the "Predictable Sales" ratio indicates the good quality of the inventory management.'
