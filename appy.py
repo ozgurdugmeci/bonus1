@@ -49,7 +49,7 @@ if yan_sayfa_secenek == 'Analyses' :
    df['Sales84'].fillna(0,inplace=True)
    df['Inventory'].fillna(0,inplace=True)
    st.dataframe(df_dummx) 
-  #except:
+  except:
    'Dosya yüklemede hata'
    'Excel dosyayı kontrol edin.'
     
