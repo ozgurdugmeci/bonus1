@@ -37,11 +37,9 @@ if yan_sayfa_secenek == 'Analyses' :
   df['Product'] = df['Product'].astype('str')
   df['Category'] = df['Category'].astype('str')
   df['Sub-Category'] = df['Sub-Category'].astype('str')
-  df['Sales21'] = df['Sales21'].astype('int64')
-  df['Sales42'] = df['Sales42'].astype('int64')
-  df['Sales63'] = df['Sales63'].astype('int64')
-  df['Sales84'] = df['Sales84'].astype('int64')
-  df['Inventory'] = df['Inventory'].astype('int')
+  df_dummx= df.copy() 
+  df_dummx= df_dummx.astype(str)
+    
   df['Product'].fillna('-',inplace=True)
   df['Category'].fillna('-',inplace=True)
   df['Sub-Category'].fillna('-',inplace=True)
@@ -50,7 +48,7 @@ if yan_sayfa_secenek == 'Analyses' :
   df['Sales63'].fillna(0,inplace=True)
   df['Sales84'].fillna(0,inplace=True)
   df['Inventory'].fillna(0,inplace=True)
-  #st.dataframe(df) 
+  st.dataframe(df_dummx) 
   #except:
   'Dosya yüklemede hata'
   'Excel dosyayı kontrol edin.'
