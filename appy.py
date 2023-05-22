@@ -49,7 +49,7 @@ if yan_sayfa_secenek == 'Analyses' :
    df['Sales84'].fillna(0,inplace=True)
    df['Inventory'].fillna(0,inplace=True)
    st.dataframe(df_dummx) 
-  except:
+  #except:
    'Dosya yüklemede hata'
    'Excel dosyayı kontrol edin.'
     
@@ -57,139 +57,139 @@ if yan_sayfa_secenek == 'Analyses' :
    #df=pd.DataFrame(rows) 
    
   try:
-   df_sfr= df.loc[df['Sales84']==0].copy()
-   
-   df_analiz= df.loc[df['Sales84'] > 0].copy()
-   
-   df_analiz['Range1']= df_analiz.Sales21
-   df_analiz['Range2']= df_analiz.Sales42-df_analiz.Sales21
-   df_analiz['Range3']= df_analiz.Sales63-df_analiz.Sales42
-   df_analiz['Range4']= df_analiz.Sales84-df_analiz.Sales63
-   
-   df_analiz['ktsy']= (df_analiz[['Range1','Range2','Range3','Range4']].std(axis=1))/(df_analiz[['Range1','Range2','Range3','Range4']].mean(axis=1))
-   
-   kosul=[
-   
-   (df_analiz['ktsy']>= 0) & (df_analiz['ktsy']< 0.36), 
-   (df_analiz['ktsy']>= 0.36) & (df_analiz['ktsy']< 0.70),
-   (df_analiz['ktsy']>= 0.70 )& (df_analiz['ktsy']< 1.26),
-   (df_analiz['ktsy']>= 1.26) ]
-   
-   secenek=[4,3,2,1]
-   df_analiz['Label']= np.select(kosul,secenek,default=4)
-   
-   df_hedef= df_analiz[['Label','Range1','Range2','Range3','Range4']]
-   
-   hedef=df_hedef.values.tolist()
+  df_sfr= df.loc[df['Sales84']==0].copy()
+  
+  df_analiz= df.loc[df['Sales84'] > 0].copy()
+  
+  df_analiz['Range1']= df_analiz.Sales21
+  df_analiz['Range2']= df_analiz.Sales42-df_analiz.Sales21
+  df_analiz['Range3']= df_analiz.Sales63-df_analiz.Sales42
+  df_analiz['Range4']= df_analiz.Sales84-df_analiz.Sales63
+  
+  df_analiz['ktsy']= (df_analiz[['Range1','Range2','Range3','Range4']].std(axis=1))/(df_analiz[['Range1','Range2','Range3','Range4']].mean(axis=1))
+  
+  kosul=[
+  
+  (df_analiz['ktsy']>= 0) & (df_analiz['ktsy']< 0.36), 
+  (df_analiz['ktsy']>= 0.36) & (df_analiz['ktsy']< 0.70),
+  (df_analiz['ktsy']>= 0.70 )& (df_analiz['ktsy']< 1.26),
+  (df_analiz['ktsy']>= 1.26) ]
+  
+  secenek=[4,3,2,1]
+  df_analiz['Label']= np.select(kosul,secenek,default=4)
+  
+  df_hedef= df_analiz[['Label','Range1','Range2','Range3','Range4']]
+  
+  hedef=df_hedef.values.tolist()
+  kuple=[]
+  tops=[]
+  
+  
+  
+  for i in hedef:
+   bol=int(i[0])
+   #print(bol)
+   i.remove(i[0])
+   kuple= sorted(i,reverse=True)
+  
+   tops.append(sum(kuple[0:bol])/bol)
    kuple=[]
-   tops=[]
+  
+  df_analiz['Predicted_Sales']= tops
+  
+  
+  
+  df_analiz['Label']=df_analiz['Label'].replace(1,'New Product1')
+  df_analiz['Label']=df_analiz['Label'].replace(2,'New Product2')
+  df_analiz['Label']=df_analiz['Label'].replace(3,'Predictable Sales')
+  df_analiz['Label']=df_analiz['Label'].replace(4,'Very Predictable Sales')
+  
+  df_analiz.loc[((df_analiz['Range4'] != 0) & (df_analiz['Label'] == 'New Product1')), 'Label'] = 'Unpredictable Sales'
+  
+  df_analiz.loc[((df_analiz['Range1'] == 0) & (df_analiz['Label'] == 'New Product1')), 'Label'] = 'Unpredictable Sales'
+  
+  df_analiz.loc[((df_analiz['Range1'] != 0) & (df_analiz['Label'] == 'New Product1') & (df_analiz['Range3'] != 0) ), 'Label'] = 'Unpredictable Sales' 
+  
+  df_analiz.loc[((df_analiz['Range4'] != 0) & (df_analiz['Label'] == 'New Product2')), 'Label'] = 'Unpredictable Sales'
+  
+  df_analiz.loc[((df_analiz['Range2'] == 0) & (df_analiz['Label'] == 'New Product2')), 'Label'] = 'Unpredictable Sales'
+  
+  df_analiz.loc[((df_analiz['Range1'] == 0) & (df_analiz['Label'] == 'New Product2')), 'Label'] = 'Unpredictable Sales'
+  
+  df_analiz.loc[((df_analiz['Range1'] <df_analiz['Range2'] ) & (df_analiz['Label'] == 'Predictable Sales') & (df_analiz['Range1'] <df_analiz['Range3'] ) &
+   (df_analiz['Range1'] <df_analiz['Range4'] )), 'Label'] = 'Decreasing Sales' 
+  
+  df_analiz.loc[((df_analiz['Range3']> df_analiz['Range1']) & (df_analiz['Range2']> df_analiz['Range1']) & 
+   (df_analiz['Label'] == 'New Product2')), 'Label'] = 'Decreasing Sales'
+  
+  df_analiz['Stock_Cover'] = (df_analiz.Inventory)/(df_analiz.Predicted_Sales/21)
+  df_analiz['Predicted_Sales'] = (df_analiz.Predicted_Sales/21)*30
    
+  df_analiz=df_analiz.sort_values(by='Predicted_Sales', ascending=False) 
+  
+  df_analiz_download= df_analiz[['Product','Inventory','Sales21','Sales42','Sales63','Sales84','Label',
+   'Stock_Cover', 'Predicted_Sales']].copy()
+  
+  df_analiz_download['Predicted_Sales']= df_analiz_download['Predicted_Sales'].round(0)
+  df_analiz_download['Stock_Cover']= df_analiz_download['Stock_Cover'].round(0)
+  
+  
+  
+  
+  df_analiz['Label']=df_analiz['Label'].replace('New Product1','New Products')
+  df_analiz['Label']=df_analiz['Label'].replace('New Product2','New Products')
+  
+  df_analiz['Label']=df_analiz['Label'].replace('Very Predictable Sales','Predictable Sales')
    
+  df_tutarlk = pd.pivot_table(df_analiz, values=['Product'], index=['Label'],  aggfunc='count' )
+  df_tutarlk = df_tutarlk.reset_index()                #index to columns
+  
+  df_tutarlk['Kum']=  df_tutarlk['Product'].sum()
+  total_product= df_tutarlk['Product'].sum()
+  df_tutarlk['Ratio']= df_tutarlk.Product / df_tutarlk.Kum
+  
+  df_tutarlk.drop(['Kum'], inplace=True, axis=1)
+  df_tutarlk.columns= ['Label','Product_Count','Ratio']
+  df_tutarlk=df_tutarlk.sort_values(by='Ratio', ascending=False)
+  total_product= str(total_product) + ' products analysed'
+  #df.style.format("{:.2%}")
+  #df.style.format({'B': "{:0<4.0f}", 'D': '{:+.2f}'})
+  df_tutarlk= df_tutarlk.style.format({'Ratio': '{:.0%}'})
+  st.info('A- Predictability Analysis') 
+  total_product
+  df_tutarlk2=df_tutarlk.astype(str).copy()
+  st.datframe(df_tutarlk2)
+  'Predictability Analysis shows the quality of inventory management. The higher percentage of the "Predictable Sales" ratio indicates the good quality of the inventory management.'
+  #download_data
+  st.info('B- Inventory Planner')
+  'Stock_Cover : The number of days until a product will be out of stock with the predicted sales speed.'
+  'Predicted_Sales : Estimated 30-day sale values '
+  
+  isim= 'Analsed_Data.csv'
+  indir = df_analiz_download.to_csv(index=False)
+  b64 = base64.b64encode(indir.encode(encoding='ISO-8859-1')).decode(encoding='ISO-8859-1')  # some strings
+  linko_final= f'<a href="data:file/csv;base64,{b64}" download={isim}>Download Analysed Data</a>'
+  st.markdown(linko_final, unsafe_allow_html=True)  
+  
+  df_analiz_show= df_analiz[['Product','Category','Sub-Category','Inventory','Label','Stock_Cover', 'Predicted_Sales','Sales21','Sales42','Sales63','Sales84']].copy()
+  
+  df_analiz_show['Predicted_Sales']= df_analiz_show['Predicted_Sales'].round(0)
+  df_analiz_show['Stock_Cover']= df_analiz_show['Stock_Cover'].round(0)
+  
+  df_analiz_show['Stock_Cover']=df_analiz_show['Stock_Cover'].astype(int)
+  df_analiz_show['Predicted_Sales']=df_analiz_show['Predicted_Sales'].astype(int)
+  df_analiz_show=df_analiz_show.reset_index(drop=True)
+  df_analiz_show2=df_analiz_show.astype(str)
+  st.dataframe(df_analiz_show2)
    
-   for i in hedef:
-    bol=int(i[0])
-    #print(bol)
-    i.remove(i[0])
-    kuple= sorted(i,reverse=True)
-   
-    tops.append(sum(kuple[0:bol])/bol)
-    kuple=[]
-   
-   df_analiz['Predicted_Sales']= tops
-   
-   
-   
-   df_analiz['Label']=df_analiz['Label'].replace(1,'New Product1')
-   df_analiz['Label']=df_analiz['Label'].replace(2,'New Product2')
-   df_analiz['Label']=df_analiz['Label'].replace(3,'Predictable Sales')
-   df_analiz['Label']=df_analiz['Label'].replace(4,'Very Predictable Sales')
-   
-   df_analiz.loc[((df_analiz['Range4'] != 0) & (df_analiz['Label'] == 'New Product1')), 'Label'] = 'Unpredictable Sales'
-   
-   df_analiz.loc[((df_analiz['Range1'] == 0) & (df_analiz['Label'] == 'New Product1')), 'Label'] = 'Unpredictable Sales'
-   
-   df_analiz.loc[((df_analiz['Range1'] != 0) & (df_analiz['Label'] == 'New Product1') & (df_analiz['Range3'] != 0) ), 'Label'] = 'Unpredictable Sales' 
-   
-   df_analiz.loc[((df_analiz['Range4'] != 0) & (df_analiz['Label'] == 'New Product2')), 'Label'] = 'Unpredictable Sales'
-   
-   df_analiz.loc[((df_analiz['Range2'] == 0) & (df_analiz['Label'] == 'New Product2')), 'Label'] = 'Unpredictable Sales'
-   
-   df_analiz.loc[((df_analiz['Range1'] == 0) & (df_analiz['Label'] == 'New Product2')), 'Label'] = 'Unpredictable Sales'
-   
-   df_analiz.loc[((df_analiz['Range1'] <df_analiz['Range2'] ) & (df_analiz['Label'] == 'Predictable Sales') & (df_analiz['Range1'] <df_analiz['Range3'] ) &
-    (df_analiz['Range1'] <df_analiz['Range4'] )), 'Label'] = 'Decreasing Sales' 
-   
-   df_analiz.loc[((df_analiz['Range3']> df_analiz['Range1']) & (df_analiz['Range2']> df_analiz['Range1']) & 
-    (df_analiz['Label'] == 'New Product2')), 'Label'] = 'Decreasing Sales'
-   
-   df_analiz['Stock_Cover'] = (df_analiz.Inventory)/(df_analiz.Predicted_Sales/21)
-   df_analiz['Predicted_Sales'] = (df_analiz.Predicted_Sales/21)*30
-    
-   df_analiz=df_analiz.sort_values(by='Predicted_Sales', ascending=False) 
-   
-   df_analiz_download= df_analiz[['Product','Inventory','Sales21','Sales42','Sales63','Sales84','Label',
-    'Stock_Cover', 'Predicted_Sales']].copy()
-   
-   df_analiz_download['Predicted_Sales']= df_analiz_download['Predicted_Sales'].round(0)
-   df_analiz_download['Stock_Cover']= df_analiz_download['Stock_Cover'].round(0)
-   
-   
-   
-   
-   df_analiz['Label']=df_analiz['Label'].replace('New Product1','New Products')
-   df_analiz['Label']=df_analiz['Label'].replace('New Product2','New Products')
-   
-   df_analiz['Label']=df_analiz['Label'].replace('Very Predictable Sales','Predictable Sales')
-    
-   df_tutarlk = pd.pivot_table(df_analiz, values=['Product'], index=['Label'],  aggfunc='count' )
-   df_tutarlk = df_tutarlk.reset_index()                #index to columns
-   
-   df_tutarlk['Kum']=  df_tutarlk['Product'].sum()
-   total_product= df_tutarlk['Product'].sum()
-   df_tutarlk['Ratio']= df_tutarlk.Product / df_tutarlk.Kum
-   
-   df_tutarlk.drop(['Kum'], inplace=True, axis=1)
-   df_tutarlk.columns= ['Label','Product_Count','Ratio']
-   df_tutarlk=df_tutarlk.sort_values(by='Ratio', ascending=False)
-   total_product= str(total_product) + ' products analysed'
-   #df.style.format("{:.2%}")
-   #df.style.format({'B': "{:0<4.0f}", 'D': '{:+.2f}'})
-   df_tutarlk= df_tutarlk.style.format({'Ratio': '{:.0%}'})
-   st.info('A- Predictability Analysis') 
-   total_product
-   df_tutarlk2=df_tutarlk.astype(str)
-   st.datframe(df_tutarlk2)
-   'Predictability Analysis shows the quality of inventory management. The higher percentage of the "Predictable Sales" ratio indicates the good quality of the inventory management.'
-   #download_data
-   st.info('B- Inventory Planner')
-   'Stock_Cover : The number of days until a product will be out of stock with the predicted sales speed.'
-   'Predicted_Sales : Estimated 30-day sale values '
-   
-   isim= 'Analsed_Data.csv'
-   indir = df_analiz_download.to_csv(index=False)
-   b64 = base64.b64encode(indir.encode(encoding='ISO-8859-1')).decode(encoding='ISO-8859-1')  # some strings
-   linko_final= f'<a href="data:file/csv;base64,{b64}" download={isim}>Download Analysed Data</a>'
-   st.markdown(linko_final, unsafe_allow_html=True)  
-   
-   df_analiz_show= df_analiz[['Product','Category','Sub-Category','Inventory','Label','Stock_Cover', 'Predicted_Sales','Sales21','Sales42','Sales63','Sales84']].copy()
-   
-   df_analiz_show['Predicted_Sales']= df_analiz_show['Predicted_Sales'].round(0)
-   df_analiz_show['Stock_Cover']= df_analiz_show['Stock_Cover'].round(0)
-   
-   df_analiz_show['Stock_Cover']=df_analiz_show['Stock_Cover'].astype(int)
-   df_analiz_show['Predicted_Sales']=df_analiz_show['Predicted_Sales'].astype(int)
-   df_analiz_show=df_analiz_show.reset_index(drop=True)
-   df_analiz_show2=df_analiz_show.astype(str)
-   st.dataframe(df_analiz_show2)
-    
-   if len(df_sfr)>0:
-    st.info('C- Zero Sales') 
-    'The table shows the products which have no sales in last 80 days.'
-    df_sfr=df_sfr.reset_index(drop=True)
-    df_sfr2=df_sfr.astype(str)
-    st.dataframe(df_sfr2)   
-  except:
-   'Excel dosya sütunlarını kontrol edin.'
+  if len(df_sfr)>0:
+   st.info('C- Zero Sales') 
+   'The table shows the products which have no sales in last 80 days.'
+   df_sfr=df_sfr.reset_index(drop=True)
+   df_sfr2=df_sfr.astype(str).copy()
+   st.dataframe(df_sfr2)   
+  #except:
+  #'Excel dosya sütunlarını kontrol edin.'
 
 
 elif yan_sayfa_secenek == 'Easy Inventory Planner' :
