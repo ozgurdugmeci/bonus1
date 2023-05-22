@@ -151,9 +151,10 @@ if yan_sayfa_secenek == 'Analyses' :
   df_tutarlk.drop(['Kum'], inplace=True, axis=1)
   df_tutarlk.columns= ['Label','Product_Count','Ratio']
   df_tutarlk2=df_tutarlk.copy()
+  df_tutarlk2=df_tutarlk2.sort_values(by='Ratio', ascending=False)
   df_tutarlk2['Ratio']=df_tutarlk2['Ratio']*100
   df_tutarlk2['Ratio']= df_tutarlk2['Ratio'].round(0)  
-  df_tutarlk2=df_tutarlk2.sort_values(by='Ratio', ascending=False)
+  
   total_product= str(total_product) + ' products analysed'
   #df_tutarlk['Product_Count']=df_tutarlk['Product_Count'].astype(str)
   #df_tutarlk['Ratio']=df_tutarlk['Ratio'].astype(str)
