@@ -31,24 +31,24 @@ if yan_sayfa_secenek == 'Analyses' :
  uploaded_file = st.file_uploader("Select Excel File To Upload", type=['xlsx'])
  
  if uploaded_file :
-  try:
-   df = pd.read_excel(uploaded_file)
-   df.columns=['Product','Category','Sub-Category','Sales21','Sales42','Sales63','Sales84','Inventory']
-   df['Product'] = df['Product'].astype('str')
-   df['Category'] = df['Category'].astype('str')
-   df['Sub-Category'] = df['Sub-Category'].astype('str')
-   df_dummx= df.copy() 
-   df_dummx= df_dummx.astype(str)
-     
-   df['Product'].fillna('-',inplace=True)
-   df['Category'].fillna('-',inplace=True)
-   df['Sub-Category'].fillna('-',inplace=True)
-   df['Sales21'].fillna(0,inplace=True)
-   df['Sales42'].fillna(0,inplace=True)
-   df['Sales63'].fillna(0,inplace=True)
-   df['Sales84'].fillna(0,inplace=True)
-   df['Inventory'].fillna(0,inplace=True)
-   st.dataframe(df_dummx) 
+  #try:
+  df = pd.read_excel(uploaded_file)
+  df.columns=['Product','Category','Sub-Category','Sales21','Sales42','Sales63','Sales84','Inventory']
+  df['Product'] = df['Product'].astype('str')
+  df['Category'] = df['Category'].astype('str')
+  df['Sub-Category'] = df['Sub-Category'].astype('str')
+  df_dummx= df.copy() 
+  df_dummx= df_dummx.astype(str)
+    
+  df['Product'].fillna('-',inplace=True)
+  df['Category'].fillna('-',inplace=True)
+  df['Sub-Category'].fillna('-',inplace=True)
+  df['Sales21'].fillna(0,inplace=True)
+  df['Sales42'].fillna(0,inplace=True)
+  df['Sales63'].fillna(0,inplace=True)
+  df['Sales84'].fillna(0,inplace=True)
+  df['Inventory'].fillna(0,inplace=True)
+  st.dataframe(df_dummx) 
   #except:
   'Dosya yüklemede hata'
   'Excel dosyayı kontrol edin.'
