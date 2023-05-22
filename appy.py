@@ -157,7 +157,8 @@ if yan_sayfa_secenek == 'Analyses' :
   df_tutarlk= df_tutarlk.style.format({'Ratio': '{:.0%}'})
   st.info('A- Predictability Analysis') 
   total_product
-  #df_tutarlk
+  df_tutarlk2=df_tutarlk.astype(str)
+  st.datframe(df_tutarlk2)
   'Predictability Analysis shows the quality of inventory management. The higher percentage of the "Predictable Sales" ratio indicates the good quality of the inventory management.'
   #download_data
   st.info('B- Inventory Planner')
@@ -178,13 +179,15 @@ if yan_sayfa_secenek == 'Analyses' :
   df_analiz_show['Stock_Cover']=df_analiz_show['Stock_Cover'].astype(int)
   df_analiz_show['Predicted_Sales']=df_analiz_show['Predicted_Sales'].astype(int)
   df_analiz_show=df_analiz_show.reset_index(drop=True)
-  #st.dataframe(df_analiz_show)
+  df_analiz_show2=df_analiz_show.astype(str)
+  st.dataframe(df_analiz_show2)
    
   if len(df_sfr)>0:
    st.info('C- Zero Sales') 
    'The table shows the products which have no sales in last 80 days.'
    df_sfr=df_sfr.reset_index(drop=True)
-   #st.dataframe(df_sfr)   
+   df_sfr2=df_sfr.astype(str)
+   st.dataframe(df_sfr2)   
   #except:
   #'Excel dosya sütunlarını kontrol edin.'
 
