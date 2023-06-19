@@ -24,7 +24,7 @@ if yan_sayfa_secenek == 'Analyses' :
  
  st.info('Once excel file is uploaded, analyses will automatically start.')
  rowy=[]
- rowy=['Product No','Category','Sub Category','21 Gün','42 Gün','63 Gün','84 Gün','Stok']
+ rowy=['Product No','Category','Sub Category','21-Day Sale','42-Day Sale','63-Day Sale','84-Day Sale','Inventory Quantity']
  st.write('Column order in excel file must be :')
  rowy   
  st.set_option('deprecation.showfileUploaderEncoding', False)
